@@ -39,43 +39,45 @@ public final class SellSubCommand {
     }
 
     public void execute(Player player, double price) {
-        if (running.contains(player.getUniqueId())) return;
-        addRunning(player.getUniqueId());
-        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            player.sendMessage(Text.text(Lang.i().getPrefix() + Lang.i().getCommands().getSell().getMustHoldItem()));
-            running.remove(player.getUniqueId());
-            return;
-        }
-
-        if (price < Config.i().getListingPrice().getMin()) {
-            player.sendMessage(Text.text(
-                    Lang.i().getPrefix() + Lang.i().getCommands().getSell().getListingPrice().getMin(),
-                    Tuple.of("%price%", Config.i().getListingPrice().getMin() + ""))
-            );
-            running.remove(player.getUniqueId());
-            return;
-        }
-
-        if (price > Config.i().getListingPrice().getMax()) {
-            player.sendMessage(Text.text(
-                    Lang.i().getPrefix() + Lang.i().getCommands().getSell().getListingPrice().getMax(),
-                    Tuple.of("%price%", Config.i().getListingPrice().getMax() + ""))
-            );
-            running.remove(player.getUniqueId());
-            return;
-        }
-
-        for (Predicate<Player> restriction : restrictions) {
-            if (restriction.test(player)) {
+        player.getScheduler().execute(plugin, () -> {
+            if (running.contains(player.getUniqueId())) return;
+            addRunning(player.getUniqueId());
+            if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+                player.sendMessage(Text.text(Lang.i().getPrefix() + Lang.i().getCommands().getSell().getMustHoldItem()));
+                running.remove(player.getUniqueId());
                 return;
             }
-        }
 
-        if (Config.i().isMinimalMode()) {
-            handleSell(player, price);
-        } else {
-             new NewListingMenu(player, price).open(player);
-        }
+            if (price < Config.i().getListingPrice().getMin()) {
+                player.sendMessage(Text.text(
+                        Lang.i().getPrefix() + Lang.i().getCommands().getSell().getListingPrice().getMin(),
+                        Tuple.of("%price%", Config.i().getListingPrice().getMin() + ""))
+                );
+                running.remove(player.getUniqueId());
+                return;
+            }
+
+            if (price > Config.i().getListingPrice().getMax()) {
+                player.sendMessage(Text.text(
+                        Lang.i().getPrefix() + Lang.i().getCommands().getSell().getListingPrice().getMax(),
+                        Tuple.of("%price%", Config.i().getListingPrice().getMax() + ""))
+                );
+                running.remove(player.getUniqueId());
+                return;
+            }
+
+            for (Predicate<Player> restriction : restrictions) {
+                if (restriction.test(player)) {
+                    return;
+                }
+            }
+
+            if (Config.i().isMinimalMode()) {
+                handleSell(player, price);
+            } else {
+                new NewListingMenu(player, price).open(player);
+            }
+        }, null, 0);
     }
 
     private void handleSell(Player player, double price) {

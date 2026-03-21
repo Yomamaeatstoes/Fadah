@@ -70,9 +70,17 @@ dependencies {
     }
 
     // Eco Items
-    compileOnly(libs.libreforge)
-    compileOnly(libs.eco)
-    compileOnly(libs.eco.items)
+    compileOnly(libs.libreforge) {
+        isTransitive = false
+    }
+
+    compileOnly(libs.eco) {
+        isTransitive = false
+    }
+
+    compileOnly(libs.eco.items) {
+        isTransitive = false
+    }
 
     dependency(libs.eco.items(), "EcoItems") {
         load = RLO.BEFORE

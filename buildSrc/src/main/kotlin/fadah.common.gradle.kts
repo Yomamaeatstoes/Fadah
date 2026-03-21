@@ -11,6 +11,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     finallyADecent(dev = BuildConstants.DEV_MODE)
     finallyADecent()
 }

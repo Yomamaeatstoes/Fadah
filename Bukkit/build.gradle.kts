@@ -71,7 +71,15 @@ dependencies {
     }
 
     // Eco Items
-    compileOnly(libs.bundles.eco) {
+    compileOnly(libs.libreforge) {
+        isTransitive = false
+    }
+
+    compileOnly(libs.eco) {
+        isTransitive = false
+    }
+
+    compileOnly(libs.eco.items) {
         isTransitive = false
     }
 

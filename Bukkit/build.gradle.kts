@@ -49,7 +49,6 @@ dependencies {
         isTransitive = false
     }
 
-    // Currency
     dependency(libs.vault(), "Vault") {
         load = RLO.BEFORE
         required = false
@@ -71,17 +70,9 @@ dependencies {
     }
 
     // Eco Items
-    compileOnly(libs.libreforge) {
-        isTransitive = false
-    }
-
-    compileOnly(libs.eco) {
-        isTransitive = false
-    }
-
-    compileOnly(libs.eco.items) {
-        isTransitive = false
-    }
+    compileOnly(libs.libreforge)
+    compileOnly(libs.eco)
+    compileOnly(libs.eco.items)
 
     dependency(libs.eco.items(), "EcoItems") {
         load = RLO.BEFORE

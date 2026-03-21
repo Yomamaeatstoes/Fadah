@@ -1,3 +1,5 @@
+cd ~/Fadah
+cat > Bukkit/build.gradle.kts <<'EOF'
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import info.preva1l.trashcan.description.paper.Permission
 import info.preva1l.trashcan.description.paper.PluginLoadOrder
@@ -155,3 +157,8 @@ paper {
 
 operator fun Provider<MinimalExternalModuleDependency>.invoke(): String =
     get().let { "${it.module.group}:${it.module.name}:${it.version}" }
+EOF
+
+grep -n "compileOnly(libs.libreforge)" Bukkit/build.gradle.kts
+grep -n "compileOnly(libs.eco.items)" Bukkit/build.gradle.kts
+./gradlew --refresh-dependencies clean build

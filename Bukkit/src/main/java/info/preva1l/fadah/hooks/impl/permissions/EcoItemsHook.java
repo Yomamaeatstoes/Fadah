@@ -11,12 +11,20 @@ import info.preva1l.hooker.annotation.Require;
 @Require("EcoItems")
 @Require(type = "config", value = "eco-items")
 public class EcoItemsHook {
+
     @OnStart
     public void onStart() {
         MatcherArgsRegistry.register(MatcherArgType.STRING, "ecoitems_id", item -> {
             var ecoitem = ItemUtilsKt.getEcoItem(item);
-            if (ecoitem == null) return "";
-            return ecoitem.getID();
+            if (ecoitem == null) {
+                return "";
+            }
+
+            try {
+                return String.valueOf(ecoitem.getClass().getMethod("getID").invoke(ecoitem));
+            } catch (ReflectiveOperationException ignored) {
+                return "";
+            }
         });
     }
 }

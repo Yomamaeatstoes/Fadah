@@ -23,9 +23,9 @@ rediseconomy = "4.3.9"
 playerpoints = "3.2.0"
 
 # eco
-libreforge = "4.81.0"
-eco = "6.77.3"
-eco-items = "5.66.0"
+libreforge = "4.58.1"
+eco = "6.56.0"
+eco-items = "5.43.1"
 
 # migrators
 zauctionhouse = "3.2.1.9"

@@ -4,7 +4,6 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
-        maven("https://repo.preva1l.info/releases/")
     }
 
     versionCatalogs {

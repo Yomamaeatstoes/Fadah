@@ -2,7 +2,6 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import info.preva1l.trashcan.description.paper.Permission
 import info.preva1l.trashcan.description.paper.PluginLoadOrder
 import info.preva1l.trashcan.description.paper.dependency
-import info.preva1l.trashcan.setRemapped
 import info.preva1l.trashcan.trashcan
 import info.preva1l.trashcan.description.paper.PaperDependencyDefinition.RelativeLoadOrder as RLO
 
@@ -28,12 +27,13 @@ repositories {
 dependencies {
     implementation(project(":API"))
     trashcan()
-    library(libs.bundles.databases)
-    library(libs.redisson)
-    library(libs.multilib)
-    library(libs.anvilgui) { setRemapped(true) }
-    library(libs.adventure.gson)
-    library(libs.influxdb)
+
+    implementation(libs.bundles.databases)
+    implementation(libs.redisson)
+    implementation(libs.multilib)
+    implementation(libs.anvilgui)
+    implementation(libs.adventure.gson)
+    implementation(libs.influxdb)
 
     dependency(libs.placeholderapi(), "PlaceholderAPI") {
         load = RLO.BEFORE
@@ -108,7 +108,6 @@ paper {
     website = "https://docs.preva1l.info/fadah/"
     author = "Preva1l"
     main = rootProject.group.toString() + ".Fadah"
-    loader = "info.preva1l.fadah.trashcan.extension.libloader.BaseLibraryLoader"
     foliaSupported = true
     apiVersion = "1.21"
     load = PluginLoadOrder.POSTWORLD
